@@ -24,3 +24,17 @@ npm install
 cp .env.example .env   # isi VITE_SUPABASE_URL & VITE_SUPABASE_ANON_KEY
 npm run dev
 ```
+
+## Database
+
+Skema, RLS policy, fungsi workflow (skor risiko, nomor pelacakan, submit laporan warga), dan storage bucket foto laporan ada di `supabase/migrations/`. Jalankan urut sesuai nomor file di SQL editor project Supabase, lalu jalankan `supabase/seed.sql` untuk data dummy wilayah Riau (hotspot satelit, tiket, laporan warga, riwayat tindak lanjut) dan akun demo per role.
+
+Akun demo Portal Instansi (password sama untuk semua): `Demo12345!`
+
+| Email | Role |
+| --- | --- |
+| bpbd@demo.com | BPBD |
+| klhk@demo.com | KLHK |
+| dishut@demo.com | Dinas Kehutanan |
+| bmkg@demo.com | BMKG/Staklim |
+| pemda@demo.com | Pemda |
