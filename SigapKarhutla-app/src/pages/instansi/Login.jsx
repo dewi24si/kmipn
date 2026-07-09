@@ -73,9 +73,12 @@ export default function Login() {
           </button>
         </form>
 
-        <p className="mt-4 text-center text-xs text-slate-400">
-          Akun demo akan tersedia setelah data seed dibuat.
-        </p>
+        <div className="mt-4 rounded-md bg-slate-50 p-3 text-center text-xs text-slate-500">
+          <p className="font-medium text-slate-600">Akun demo (password sama)</p>
+          <p className="mt-1">bpbd@demo.com &middot; klhk@demo.com &middot; dishut@demo.com</p>
+          <p>bmkg@demo.com &middot; pemda@demo.com</p>
+          <p className="mt-1 font-mono">Demo12345!</p>
+        </div>
       </div>
     </div>
   )
