@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { NavLink, Outlet, Link } from 'react-router-dom'
 
 const navItems = [
@@ -7,6 +8,8 @@ const navItems = [
 ]
 
 export default function WargaLayout() {
+  const [menuTerbuka, setMenuTerbuka] = useState(false)
+
   return (
     <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-10 border-b border-forest-800/10 bg-forest-800 text-white">
@@ -19,7 +22,8 @@ export default function WargaLayout() {
               SIGAP <span className="text-ember-300">KARHUTLA</span>
             </span>
           </Link>
-          <nav className="flex items-center gap-1 text-sm">
+
+          <nav className="hidden items-center gap-1 text-sm md:flex">
             {navItems.map((item) => (
               <NavLink
                 key={item.to}
@@ -41,7 +45,49 @@ export default function WargaLayout() {
               Portal Instansi
             </Link>
           </nav>
+
+          <button
+            type="button"
+            onClick={() => setMenuTerbuka((v) => !v)}
+            className="rounded-md border border-forest-100/30 p-2 text-forest-100 md:hidden"
+            aria-label="Buka menu"
+          >
+            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2">
+              {menuTerbuka ? (
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
         </div>
+
+        {menuTerbuka && (
+          <nav className="flex flex-col gap-1 border-t border-white/10 px-4 py-3 text-sm md:hidden">
+            {navItems.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                end={item.end}
+                onClick={() => setMenuTerbuka(false)}
+                className={({ isActive }) =>
+                  `rounded-md px-3 py-2 transition-colors ${
+                    isActive ? 'bg-forest-700 text-white' : 'text-forest-100 hover:bg-forest-700/60'
+                  }`
+                }
+              >
+                {item.label}
+              </NavLink>
+            ))}
+            <Link
+              to="/instansi/login"
+              onClick={() => setMenuTerbuka(false)}
+              className="rounded-md border border-forest-100/30 px-3 py-2 text-forest-100 hover:bg-forest-700/60"
+            >
+              Portal Instansi
+            </Link>
+          </nav>
+        )}
       </header>
 
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6">
