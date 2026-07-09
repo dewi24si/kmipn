@@ -1,16 +1,40 @@
-# React + Vite
+# SIGAP KARHUTLA
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Prototipe web untuk kompetisi KMIPN VIII 2026 (kategori E-Government) — platform tata kelola mitigasi kebakaran hutan dan lahan (karhutla) yang mengintegrasikan data hotspot satelit, laporan warga terverifikasi, dan workflow koordinasi lintas instansi (BPBD, KLHK, Dinas Kehutanan, BMKG).
 
-Currently, two official plugins are available:
+## Tech stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React + Vite + Tailwind CSS v4
+- Supabase (Auth, Postgres, Storage)
+- react-router-dom, react-leaflet, recharts
 
-## React Compiler
+## Struktur
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Satu aplikasi, dua portal:
 
-## Expanding the ESLint configuration
+- **Portal Warga** (publik, tanpa login) — `src/pages/warga/*`, layout di `src/layouts/WargaLayout.jsx`
+- **Portal Instansi** (perlu login) — `src/pages/instansi/*`, layout di `src/layouts/InstansiLayout.jsx`
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Kode bersama: `src/lib/supabase.js` (client Supabase), `src/context/AuthContext.jsx` + `src/hooks/useAuth.js` (sesi & profil pengguna), `src/components/shared`.
+
+## Setup lokal
+
+```bash
+npm install
+cp .env.example .env   # isi VITE_SUPABASE_URL & VITE_SUPABASE_ANON_KEY
+npm run dev
+```
+
+## Database
+
+Skema, RLS policy, fungsi workflow (skor risiko, nomor pelacakan, submit laporan warga), dan storage bucket foto laporan ada di `supabase/migrations/`. Jalankan urut sesuai nomor file di SQL editor project Supabase, lalu jalankan `supabase/seed.sql` untuk data dummy wilayah Riau (hotspot satelit, tiket, laporan warga, riwayat tindak lanjut) dan akun demo per role.
+
+Akun demo Portal Instansi (password sama untuk semua): `Demo12345!`
+
+| Email | Role |
+| --- | --- |
+| bpbd@demo.com | BPBD |
+| klhk@demo.com | KLHK |
+| dishut@demo.com | Dinas Kehutanan |
+| bmkg@demo.com | BMKG/Staklim |
+| pemda@demo.com | Pemda |
